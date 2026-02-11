@@ -44,11 +44,32 @@ night-research/
 │   └── final-report.md            # Final synthesis format
 ├── docs/blog/                     # Design documentation (7 articles)
 └── reports/                       # Generated output (gitignored)
+    └── YYYY-MM-DD/
+        ├── projects.txt           # Discovered project list (checkpoint)
+        ├── discovery/             # Phase 1 raw agent output (checkpoint)
+        ├── answers/               # Phase 2 raw agent output (checkpoint)
+        ├── projects/              # Phase 3 per-project reports
+        └── final-report.md        # Final synthesis
 ```
 
 ## Context Window Optimization
 
 CLAUDE.md is deliberately minimal (~40 lines). Detailed execution steps, templates, and report formats live in separate `.md` files that are only read when the pipeline runs. This keeps the context window lean for interactive use.
+
+## Crash Recovery
+
+The pipeline is designed to survive context window exhaustion (the most common failure mode). Every phase saves results to disk immediately after each batch completes:
+
+```
+reports/YYYY-MM-DD/
+├── projects.txt          # Project list (saved in Step 1)
+├── discovery/            # Phase 1 raw output (saved per batch)
+├── answers/              # Phase 2 raw output (saved per batch)
+├── projects/             # Phase 3 synthesized reports
+└── final-report.md       # Final synthesis
+```
+
+If the context runs out mid-pipeline, just say "run the night research" again — the orchestrator checks what files already exist and resumes from where it stopped. No work is lost.
 
 ## Usage
 

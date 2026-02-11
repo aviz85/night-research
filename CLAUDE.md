@@ -22,6 +22,9 @@ Main Orchestrator
 3. **Output → reports/** — All generated files in `reports/YYYY-MM-DD/`
 4. **No nesting** — Main orchestrates both phases directly
 5. **max_turns** — Always set on Task calls (20 discovery, 12 questions) to prevent context blowout
+6. **Save to disk after every batch** — NEVER hold results only in context memory. Write files immediately. This makes the pipeline recoverable if context runs out
+7. **Check for existing run first** — Before starting, check `reports/YYYY-MM-DD/` for partial results. Resume, don't restart
+8. **Re-run empty agents** — If a Task returns only agentId with no text, re-run it immediately
 
 ## How to Run
 
