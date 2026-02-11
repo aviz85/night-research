@@ -44,7 +44,7 @@
 ### WhatsApp (via WAHA + Green API)
 - **Skill:** `~/.claude/skills/whatsapp/`
 - **Used for:** Final summary delivery
-- **Endpoint:** Aviz's number (972503973736)
+- **Endpoint:** Owner's WhatsApp number (configured in whatsapp skill)
 
 ## Cost Estimates (per run)
 

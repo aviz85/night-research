@@ -33,6 +33,9 @@ The biggest surprise. The Task tool's `general-purpose` type has "Tools: *" in t
 ### Prompt Template as Architecture
 The prompt templates (discovery-agent.md, question-agent.md) are essentially the "code" of this system. There's no traditional programming — the entire behavior is defined by natural language prompts with structured output formats.
 
+### Context Limit Blowout (`classifyHandoffIfNeeded`)
+When subagents exhaust their context window, Claude Code throws `classifyHandoffIfNeeded is not defined`. This is an internal error — not a user-configurable hook. The fix: always set `max_turns` on Task tool calls to cap agent runtime before they hit context limits. Discovery agents: 20 turns. Question agents: 12 turns.
+
 ## Recommendations for Similar Projects
 
 1. **Research the platform first** — Use claude-code-guide or equivalent to understand constraints before designing
