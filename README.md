@@ -18,6 +18,10 @@ Main Orchestrator
 
 **Total: ~110 agents | ~1.6M tokens | ~$2.50 per run**
 
+## Disclaimer
+
+This is an **experiment** — a proof-of-concept for multi-agent orchestration patterns with Claude Code. It is not production software. Use at your own risk. The authors take no responsibility for API costs, unexpected behavior, or any consequences of running this system. You are solely responsible for reviewing the code and understanding what it does before executing it.
+
 ## Key Design Decisions
 
 - **Read-only enforcement** — Explore agents lack Write/Edit tools. Prompts reinforce this as defense-in-depth
@@ -60,6 +64,12 @@ The orchestrator reads `execution-guide.md` and runs the full pipeline autonomou
 
 - [Claude Code CLI](https://claude.ai/claude-code)
 - WhatsApp skill configured (for delivery phase, optional)
+
+## Known Issue: `classifyHandoffIfNeeded`
+
+If subagents run too long and exhaust their context window, Claude Code throws an internal error: `classifyHandoffIfNeeded is not defined`. This is **not** a hook you configure — it's a Claude Code internal function that fails when an agent hits its context limit.
+
+**This happens on its own** when agents do too many tool calls without a `max_turns` cap. The fix is already built into the execution guide: discovery agents are capped at 20 turns, question agents at 12. If you still see this error, lower the `max_turns` values or simplify the prompt templates to reduce agent work.
 
 ## Documentation
 
