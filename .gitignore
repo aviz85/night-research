@@ -17,4 +17,5 @@ node_modules/
 .claude/todos/
 .claude/plans/
 
-# Keep reports (they're the main output)
+# Reports (generated output, don't track)
+reports/
